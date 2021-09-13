@@ -1,0 +1,50 @@
+
+<div id="data-container">
+
+  <h1 id="greeting">
+    Welcome to the world of Wine!
+  </h1>
+
+  <table mat-table (matSortChange)="sortColumn($event)"
+         [dataSource]="wine" multiTemplateDataRows matSort
+         class="mat-elevation-z8">
+    <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column"
+          class="col-headers-style"> {{column}}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="column !== 'points'">{{element[column]}}</ng-container>
+        <ng-container *ngIf="column == 'points'" class="point-column">
+          <span>{{element[column]}}</span>
+          <mat-progress-bar mode="determinate" aria-label="display point value" value="{{element[column]}}" class="points-display"></mat-progress-bar>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="wine-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="wine-description"> More Descriptions:
+            {{element.description}}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="wine-detail-row"
+        [class.wine-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-detail-row"></tr>
+  </table>
+
+  <mat-paginator [length]="maxTotal"
+                 [pageSize]="pageSize"
+                 aria-label="Select page"
+                 (page)="changePage($event)">
+  </mat-paginator>
+</div>

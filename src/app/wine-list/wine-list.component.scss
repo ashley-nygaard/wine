@@ -1,0 +1,56 @@
+@import "../../variables";
+
+#data-container {
+  margin: 15px;
+  padding-bottom: 25px;
+}
+#greeting {
+  margin: 10px;
+}
+
+.col-headers-style {
+  text-transform: capitalize;
+  background-color: $rose;
+  color: white !important;
+  &.mat-sort-header-content {
+    color: $pure-white;
+  }
+}
+
+.points-display {
+  width: 80%;
+}
+
+tr.expanded-detail-row {
+  height: 0;
+}
+
+tr.wine-detail-row:not(.wine-expanded-row):hover {
+  background: $smoke;
+}
+
+tr.wine-detail-row:not(.wine-expanded-row):active {
+  background: $light-white;
+}
+
+.wine-detail-row td {
+  border-bottom-width: 0;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.wine-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.wine-description {
+  min-height: 65px;
+  padding: 16px;
+  cursor: default;
+}
+
+::ng-deep .mat-sort-header-arrow[style] {
+  color: $pure-white;
+}
